@@ -111,6 +111,10 @@ public class TaskNode implements Node {
       @Override
       @ParametersAreNonnullByDefault
       public void onSuccess(Object result) {
+        if (result.getClass() != _outType) {
+          this.onFailure(new Exception("Incorrect type of result for " + _task.getName()));
+          return;
+        }
         if (_successors.size() == 0) {
           try {
             _graph.get().executeCallback(_task.getName(), result);
