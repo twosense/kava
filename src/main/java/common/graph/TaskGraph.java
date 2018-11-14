@@ -96,9 +96,6 @@ public class TaskGraph implements Graph {
       throw new Exception("Graph execution is turned off.");
     }
 
-    Callable get = request::getData;
-    request.setTask(() -> get);
-
     TaskNode target = _nodes.get(request.getDestination());
     target.addLinker(request.getSource());
     target.on(request);

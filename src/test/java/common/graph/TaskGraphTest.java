@@ -197,7 +197,7 @@ public class TaskGraphTest {
           System.out.println("inside " + _name + " execute()");
           result = this.result("additionAndConversion") + this.result("passThroughConversion");
           System.out.println("complete " + _name + " execute()");
-          Thread.sleep(3000);
+          Thread.sleep(1000);
           return result;
         } catch (Exception e) {
           latch.countDown();
@@ -275,7 +275,7 @@ public class TaskGraphTest {
 
     service.submit(() -> {
       try {
-        //taskGraph.in(request3);
+        taskGraph.in(request3);
         taskGraph.in(request3);
       } catch (Exception e) {
         System.out.println(e.getMessage());
@@ -301,7 +301,7 @@ public class TaskGraphTest {
     service.submit(() -> {
       try {
         taskGraph.in(request1);
-        //taskGraph.in(request1);
+        taskGraph.in(request1);
       } catch (Exception e) {
         System.out.println(e.getMessage());
         Assert.fail(e.getMessage());
@@ -310,7 +310,7 @@ public class TaskGraphTest {
     service.submit(() -> {
       try {
         taskGraph.in(request5);
-        //taskGraph.in(request5);
+        taskGraph.in(request5);
       } catch (Exception e) {
         System.out.println(e.getMessage());
         Assert.fail(e.getMessage());
