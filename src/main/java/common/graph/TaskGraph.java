@@ -120,7 +120,7 @@ public class TaskGraph implements Graph {
   /*****************
    Hidden Methods */
 
-  protected void executeCallback(String name, Object result) {
+  protected void executeCallback(String name, Object result) throws NullPointerException {
     _completionCallbacks.get(name).onComplete(name, result);
   }
 }

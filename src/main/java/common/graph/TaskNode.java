@@ -55,6 +55,9 @@ public class TaskNode implements Node {
    Hidden Methods */
 
   protected void on(ProcessRequest request) throws IllegalArgumentException, InterruptedException, ExecutionException {
+    if (request.getData() == null) {
+      throw new IllegalArgumentException("Got null result from " + request.getSource());
+    }
     if (request.getData() != null && request.getData().getClass() != _inType)
       throw new IllegalArgumentException("Invalid input type.");
 
@@ -111,6 +114,10 @@ public class TaskNode implements Node {
       @Override
       @ParametersAreNonnullByDefault
       public void onSuccess(Object result) {
+        if (result == null) {
+          onFailure(new IllegalArgumentException("Got null result from " + _task.getName()));
+          return;
+        }
         if (result.getClass() != _outType) {
           this.onFailure(new Exception("Incorrect type of result for " + _task.getName()));
           return;
