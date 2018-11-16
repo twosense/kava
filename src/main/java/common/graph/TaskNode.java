@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 
 @SuppressWarnings({"WeakerAccess", "unchecked"})
 public class TaskNode implements Node {
-
+  private static final Object SYNC_LOCK = new Object();
   private AbstractTask _task;
   private Class<?> _inType;
   private Class<?> _outType;
@@ -144,9 +144,16 @@ public class TaskNode implements Node {
     }, TaskExecutor.main());
   }
 
-  protected void setGraph(TaskGraph g) {
-    if (_graph == null)
-      _graph = new WeakReference<>(g);
+  protected void setGraph(TaskGraph graph) {
+    WeakReference<TaskGraph> g = _graph;
+    if (g == null) {
+      synchronized (SYNC_LOCK) {
+        g = _graph;
+        if (g == null) {
+          _graph = new WeakReference<>(graph);
+        }
+      }
+    }
   }
 
   protected void addSuccessor(@Nonnull TaskNode node) throws Exception {
