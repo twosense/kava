@@ -133,7 +133,9 @@ public class TaskNode implements Node {
         // Notify successors that we've completed execution
         for (TaskNode n : _successors) {
           try {
-            n.on(new ProcessRequest(_task.getName(), n._task.getName(), result));
+            synchronized (TaskNode.this) {
+              n.on(new ProcessRequest(_task.getName(), n._task.getName(), result));
+            }
           } catch (InterruptedException | ExecutionException e) {
             System.out.println(e.getMessage());
           }
