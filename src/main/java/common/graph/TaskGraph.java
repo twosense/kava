@@ -4,22 +4,22 @@ import common.task.AbstractTask;
 import common.task.ProcessRequest;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings("WeakerAccess")
 public class TaskGraph implements Graph {
 
   private boolean _on = false;
   protected WeakHashMap<String, TaskNode> _nodes;
-  private HashMap<String, TaskGraphCallback> _completionCallbacks;
+  private ConcurrentHashMap<String, TaskGraphCallback> _completionCallbacks;
 
   /*****************
    Public Methods */
 
   public TaskGraph() {
     _nodes = new WeakHashMap<>();
-    _completionCallbacks = new HashMap<>();
+    _completionCallbacks = new ConcurrentHashMap<>();
   }
 
   @Override
