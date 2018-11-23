@@ -316,7 +316,6 @@ public class TaskGraphTest {
         Assert.fail(e.getMessage());
       }
     });
-     // for multi-threaded execution
 
     latch.await();
 
